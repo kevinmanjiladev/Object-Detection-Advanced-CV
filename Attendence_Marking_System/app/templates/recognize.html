@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Recognition Attendance</title>
+
+    <!-- Load external CSS -->
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+    <div class="header">
+        <h2>Face Recognition Attendance</h2>
+        <p class="sub">AI-Powered Smart Attendance System</p>
+    </div>
+
+    <div class="main-card">
+        <video id="video" autoplay></video>
+
+        <button onclick="capture()" class="capture-btn">
+            📸 Mark Attendance
+        </button>
+
+        <div id="result" class="result-card"></div>
+    </div>
+
+    <script>
+        const video = document.getElementById("video");
+
+        navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => { video.srcObject = stream; });
+
+        function capture() {
+            const canvas = document.createElement("canvas");
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(video, 0, 0);
+
+            canvas.toBlob(blob => {
+                const formData = new FormData();
+                formData.append("file", blob, "face.jpg");
+
+                fetch("http://127.0.0.1:8000/recognize", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(res => res.json())
+                .then(data => {
+                let box = document.getElementById("result");
+
+                // No face detected at all
+                if (data.results.length === 0) {
+                    box.innerHTML = `<p class='no-face'>❌ No Face Detected</p>`;
+                    return;
+                }
+
+                const r = data.results[0];
+
+                // Unknown person case
+                if (r.name === "Unknown" || r.confidence > 80) {
+                    box.innerHTML = `<p class='unknown'>⚠️ No Matches Found</p>`;
+                    return;
+                }
+
+                // Known person → show details
+                box.innerHTML = `
+                    <h3>Result</h3>
+                    <div class="info">
+                        <p><strong>Name:</strong> ${r.name}</p>
+                        <p><strong>Confidence:</strong> ${r.confidence.toFixed(2)}</p>
+                        <p class="${r.status === 'Marked' ? 'marked' : 'already'}">
+                            <strong>Status:</strong> ${r.status}
+                        </p>
+                    </div>
+                `;
+            });
+            }, "image/jpeg");
+        }
+    </script>
+
+</body>
+</html> 

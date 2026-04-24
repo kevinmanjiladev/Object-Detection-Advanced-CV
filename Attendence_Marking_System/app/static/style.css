@@ -1,0 +1,145 @@
+/* ---- GLOBAL ---- */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+    background: linear-gradient(135deg, #0d0d12, #00111a, #002b44);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* ---- HEADER ---- */
+.header {
+    text-align: center;
+    margin-top: 40px;
+}
+
+h2 {
+    font-size: 38px;
+    font-weight: 700;
+    color: #00eaff;
+    letter-spacing: 1px;
+}
+
+.sub {
+    margin-top: -10px;
+    color: #9ccdde;
+    font-size: 16px;
+}
+
+/* ---- MAIN CARD ---- */
+.main-card {
+    margin-top: 40px;
+    padding: 25px;
+    width: 90%;
+    max-width: 800px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 0 30px rgba(0, 200, 255, 0.1);
+    text-align: center;
+}
+
+/* ---- VIDEO ---- */
+video {
+    width: 80%;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+}
+
+/* ---- BUTTON ---- */
+.capture-btn {
+    margin-top: 20px;
+    padding: 14px 26px;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    background: linear-gradient(135deg, #00d4ff, #0077ff);
+    color: white;
+    transition: 0.2s ease;
+}
+
+.capture-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+}
+
+/* ---- RESULT CARD ---- */
+.result-card {
+    margin-top: 25px;
+    padding: 20px;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    text-align: left;
+    display: none; /* will show when data comes */
+}
+
+.result-card h3 {
+    margin-top: 0;
+    color: #00eaff;
+}
+
+.info p {
+    margin: 8px 0;
+    font-size: 16px;
+}
+
+.marked {
+    color: #13ff70;
+    font-weight: bold;
+}
+
+.already {
+    color: #ff9d3a;
+    font-weight: bold;
+}
+
+.no-face {
+    color: #ff4c4c;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+}
+.no-face {
+    color: #ff4444;
+    font-size: 20px;
+    text-align: center;
+    padding: 15px;
+}
+
+.unknown {
+    color: #ffaa00;
+    font-size: 20px;
+    text-align: center;
+    padding: 15px;
+    font-weight: 600;
+}
+
+/* ---- SHOW RESULT WHEN DATA COMES ---- */
+.result-card:not(:empty) {
+    display: block;
+}
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 600px) {
+    h2 {
+        font-size: 28px;
+    }
+
+    .capture-btn {
+        width: 100%;
+        padding: 12px;
+    }
+
+    .main-card {
+        padding: 15px;
+    }
+}
